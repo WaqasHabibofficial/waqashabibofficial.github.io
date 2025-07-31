@@ -1,6 +1,6 @@
 <?php
 
-$to = 'info@example.com';  // please change this email id
+$to = 'waqashabibbuilders@gmail.com';  // please change this email id
 
 $errors = array();
 // print_r($_POST);
@@ -46,7 +46,7 @@ $subject = $_POST['subject'];
 $name = $_POST['name'];
 $phone = $_POST['phone'];
 $from = $name;
-$subject = 'Please Call Me : Titan - Responsive HTML5 Template for Consultants & Professionals';
+$subject = 'Please Call Me : WaqasHabibBuilders';
 
 $body = "From: $name\n Phone: $phone\n Subject:\n $subject";
 
