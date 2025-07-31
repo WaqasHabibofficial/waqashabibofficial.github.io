@@ -50,7 +50,7 @@
       $people = $_POST['people'];
       $email = $_POST['email'];
       $from = $email;
-      $to = 'info@example.com';  // please change this email id
+      $to = 'waqashabibbuilders@gmail.com';  // please change this email id
       $subject = 'Table Booking : Titan';
       
       $body = "From: E-Mail: $email\n Date: $date\n Time: $time\n Number of people: $people";
