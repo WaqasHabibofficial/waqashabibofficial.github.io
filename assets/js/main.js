@@ -606,8 +606,8 @@ console.log('%c Proudly Crafted with ZiOn.', 'background: #222; color: #bada55')
         // When the window has finished loading create our google map below
         google.maps.event.addDomListener(window, 'load', init);
 
-        var mkr = new google.maps.LatLng(33.6844, 73.0479);
-        var cntr = (mobileTest) ? mkr : new google.maps.LatLng(33.6844, 73.0479);
+        var mkr = new google.maps.LatLng(33.5843063,72.8808882);
+        var cntr = (mobileTest) ? mkr : new google.maps.LatLng(33.5843063, 72.8808882);
 
         function init() {
             // Basic options for a simple Google Map
@@ -617,7 +617,7 @@ console.log('%c Proudly Crafted with ZiOn.', 'background: #222; color: #bada55')
                 zoom: 11,
                 scrollwheel: false,
                 // The latitude and longitude to center the map (always required)
-                center: cntr, // New York
+                center: cntr, // Islamabad
 
                 // How you would like to style the map.
                 // This is where you would paste any style found on Snazzy Maps.
