@@ -1,80 +1,80 @@
 /**
-* PHP Email Form Validation - v3.11
-* URL: https://bootstrapmade.com/php-email-form/
-* Author: BootstrapMade.com
+* PHP Email Form Validation - Adapted for Web3Forms
 */
 (function () {
   "use strict";
 
   let forms = document.querySelectorAll('.php-email-form');
 
-  forms.forEach( function(e) {
-    e.addEventListener('submit', function(event) {
+  forms.forEach(function(form) {
+    form.addEventListener('submit', function(event) {
       event.preventDefault();
 
       let thisForm = this;
-
       let action = thisForm.getAttribute('action');
       let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
-      
-      if( ! action ) {
+
+      if (!action) {
         displayError(thisForm, 'The form action property is not set!');
         return;
       }
-      thisForm.querySelector('.loading').classList.add('d-block');
-      thisForm.querySelector('.error-message').classList.remove('d-block');
-      thisForm.querySelector('.sent-message').classList.remove('d-block');
 
-      let formData = new FormData( thisForm );
+      toggleState(thisForm, true);
 
-      if ( recaptcha ) {
-        if(typeof grecaptcha !== "undefined" ) {
+      let formData = new FormData(thisForm);
+
+      if (recaptcha) {
+        if (typeof grecaptcha !== "undefined") {
           grecaptcha.ready(function() {
             try {
               grecaptcha.execute(recaptcha, {action: 'php_email_form_submit'})
-              .then(token => {
-                formData.set('recaptcha-response', token);
-                php_email_form_submit(thisForm, action, formData);
-              })
-            } catch(error) {
+                .then(token => {
+                  formData.set('recaptcha-response', token);
+                  submitForm(thisForm, action, formData);
+                });
+            } catch (error) {
               displayError(thisForm, error);
             }
           });
         } else {
-          displayError(thisForm, 'The reCaptcha javascript API url is not loaded!')
+          displayError(thisForm, 'The reCaptcha javascript API url is not loaded!');
         }
       } else {
-        php_email_form_submit(thisForm, action, formData);
+        submitForm(thisForm, action, formData);
       }
     });
   });
 
-  function php_email_form_submit(thisForm, action, formData) {
+  function submitForm(thisForm, action, formData) {
     fetch(action, {
       method: 'POST',
       body: formData,
       headers: {'X-Requested-With': 'XMLHttpRequest'}
     })
-    .then(response => {
-      if( response.ok ) {
-        return response.text();
-      } else {
-        throw new Error(`${response.status} ${response.statusText} ${response.url}`); 
-      }
-    })
+    .then(response => response.text())
     .then(data => {
-      thisForm.querySelector('.loading').classList.remove('d-block');
-    if (data.includes('"success":true')) {
-
-        thisForm.querySelector('.sent-message').classList.add('d-block');
-        thisForm.reset(); 
-      } else {
-        throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
+      toggleState(thisForm, false);
+      try {
+        const json = JSON.parse(data);
+        if (json.success) {
+          thisForm.querySelector('.sent-message').classList.add('d-block');
+          thisForm.reset();
+        } else {
+          throw new Error(json.message || 'Form submission failed.');
+        }
+      } catch (err) {
+        throw new Error('Invalid response from server.');
       }
     })
-    .catch((error) => {
-      displayError(thisForm, error);
+    .catch(error => {
+      displayError(thisForm, error.message || error);
     });
+  }
+
+  function toggleState(thisForm, loading) {
+    thisForm.querySelector('.loading').classList.toggle('d-block', loading);
+    thisForm.querySelector('.error-message').classList.remove('d-block');
+    thisForm.querySelector('.sent-message').classList.remove('d-block');
   }
 
   function displayError(thisForm, error) {
@@ -84,4 +84,3 @@
   }
 
 })();
-
