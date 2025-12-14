@@ -173,7 +173,15 @@
                       <p>Share your project details and receive a comprehensive estimate tailored to your specific needs.</p>
                     </div>
 
-                    <form action="forms/quote.php" method="post" class="php-email-form">
+                    <form action="https://api.web3forms.com/submit" method="POST" class="php-email-form">
+                      
+                       <!-- Web3Forms required hidden fields -->
+                       <input type="hidden" name="access_key" value="ebcdf575-546c-4500-a958-eff13e7f6f35">
+                       <input type="hidden" name="subject" value="New Quote Request">
+                       <input type="hidden" name="from_name" value="WaqasHabibbuilders">
+
+                      
+
                       <div class="form-grid">
                         <div class="form-field">
                           <label for="fullname">Full Name</label>
