@@ -163,7 +163,10 @@
               <h3>Get in Touch</h3>
               <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua consectetur adipiscing.</p>
 
-              <form action="forms/contact.php" method="post" class="php-email-form">
+              <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="ebcdf575-546c-4500-a958-eff13e7f6f35">
+                <input type="hidden" name="subject" value="Waqas Habib Builders">
+                <input type="hidden" name="from_name" value="Waqas Habib Builders contact">
                 <div class="row">
                   <div class="col-md-6 form-group">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
